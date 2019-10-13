@@ -10,9 +10,10 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.40.12"
-		}
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
+		},
+		"dataSources": {}
 	},
 	"sap.ui": {
 		"technology": "UI5",
@@ -57,11 +58,29 @@
 					"bundleName": "scp.com.saparate.i18n.i18n"
 				}
 			},
-			"": {
+			"repoType": {
 				"type": "sap.ui.model.json.JSONModel",
 				"settings": {},
 				"preload": true,
-				"uri": "model/Navigation.json"
+				"uri": "mockData/Repotype.json"
+			},
+			"branch": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"preload": false,
+				"uri": "mockData/branch.json"
+			},
+			"Projects": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"preload": false,
+				"uri": "mockData/projects.json"
+			},
+			"servers": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {},
+				"preload": false,
+				"uri": "i18n/Servers.properties"
 			}
 		},
 		"resources": {
@@ -122,6 +141,33 @@
 					"target": [
 						"NewPipeLine"
 					]
+				},
+				{
+					"name": "jobs",
+					"pattern": "jobs",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"jobs"
+					]
+				},
+				{
+					"name": "jobdetails",
+					"pattern": "jobdetails/{jobId}",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"jobdetails"
+					]
+				},
+				{
+					"name": "buildStages",
+					"pattern": "buildStages/{jobId},{buildid}",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"buildStages"
+					]
 				}
 			],
 			"targets": {
@@ -151,6 +197,18 @@
 				"NewPipeLine": {
 					"viewType": "XML",
 					"viewName": "NewPipeLine"
+				},
+				"jobs": {
+					"viewType": "XML",
+					"viewName": "jobs"
+				},
+				"jobdetails": {
+					"viewType": "XML",
+					"viewName": "jobdetails"
+				},
+				"buildStages": {
+					"viewType": "XML",
+					"viewName": "buildStages"
 				}
 			}
 		}

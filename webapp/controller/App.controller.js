@@ -1,8 +1,10 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function (Controller) {
+	"sap/ui/core/mvc/Controller",
+	"scp/com/saparate/utils/formatter"
+], function (Controller,formatter) {
 	"use strict";
 	return Controller.extend("scp.com.saparate.controller.App", {
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -55,8 +57,15 @@ sap.ui.define([
 		},
 		gotoPipelines: function () {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("NewPipeLine");
+			oRouter.navTo("jobs");
+
+		},
+		gotoSettings:function () {
+		//	var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+		//	oRouter.navTo("jobs");
 
 		}
+
+		
 	});
 });
