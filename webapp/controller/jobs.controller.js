@@ -1,6 +1,7 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function (Controller) {
+	"sap/ui/core/mvc/Controller",
+	"sap/m/MessageToast"
+], function (Controller, MessageToast) {
 	"use strict";
 
 	return Controller.extend("scp.com.saparate.controller.jobs", {
@@ -41,14 +42,18 @@ sap.ui.define([
 		//
 		//	}
 		_onObjectMatched: function (oEvent) {
+			var from = oEvent.getParameter("arguments").from;
+			//console.log(from);
+			this.byId("idtblAllPipelines").setBusy(true);
 			var oModel_jobs = new sap.ui.model.json.JSONModel();
 			oModel_jobs.loadData(this.getOwnerComponent().getModel("servers").getProperty("jobs"));
+			this.byId("idtblAllPipelines").setBusy(false);
 			this.getView().setModel(oModel_jobs, "Jobs");
 
 		},
 		handleshowBuilddetails: function (oEvent) {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			var selectedJobId = oEvent.getSource().getBindingContext("Jobs").getProperty("name");
+			var selectedJobId = oEvent.getSource().getBindingContext("Jobs").getProperty("projectname");
 			oRouter.navTo("jobdetails", {
 				jobId: selectedJobId
 			});
@@ -57,7 +62,46 @@ sap.ui.define([
 		navigatetoCreatePipeline: function (oEvent) {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("NewPipeLine");
-		}
+		},
+		initiateTriggerJob: function (oEvent) {
+			var selectedJobId = oEvent.getSource().getBindingContext("Jobs").getProperty("projectname");
+			var oModel_triggerJob = new sap.ui.model.json.JSONModel();
+			oModel_triggerJob.attachRequestSent(function () {
+				this.getView().setBusy(true);
+			}.bind(this));
+			var jobids = {
+				"jobName": selectedJobId
+			};
+			oModel_triggerJob.loadData(this.getOwnerComponent().getModel("servers").getProperty("triggerjob"), JSON.stringify(jobids), true,
+				"POST", false, false, {
+					"Content-Type": "application/json"
+				});
+			oModel_triggerJob.attachRequestCompleted(function () {
+				var msg = 'Job Invoked Successfully';
+				MessageToast.show(msg);
+				this.getView().setBusy(false);
+				var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+				oRouter.navTo("jobdetails", {
+					jobId: selectedJobId
+				});
+			}.bind(this));
+		},
+		gotoBuilds: function (oEvent) {
+			var selectedJobId = oEvent.getSource().getBindingContext("Jobs").getProperty("projectname");
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("jobdetails", {
+				jobId: selectedJobId
+			});
 
+		},
+		gotoDeleteJob: function (oEvent) {
+			var selectedJobId = oEvent.getSource().getBindingContext("Jobs").getProperty("projectname");
+			var oModel_deleteJob = new sap.ui.model.json.JSONModel();
+			oModel_deleteJob.loadData(this.getOwnerComponent().getModel("servers").getProperty("DeleteJob") + "?jobName=" + selectedJobId);
+			var msg = 'Job Deleted Successfully';
+			MessageToast.show(msg);
+			//	this.getView().getModel().refresh();
+
+		}
 	});
 });

@@ -69,7 +69,11 @@ sap.ui.define([
 		},
 		navigatetobuildpipelines: function (oEvent) {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("jobs");
+			//oRouter.navTo("jobs");
+			
+			oRouter.navTo("jobs", {
+				from: "tonewpipeline"
+			});
 		},
 		/**
 		 *@memberOf scp.com.saparate.controller.jobdetails

@@ -144,7 +144,7 @@
 				},
 				{
 					"name": "jobs",
-					"pattern": "jobs",
+					"pattern": "jobs/{from}",
 					"titleTarget": "",
 					"greedy": false,
 					"target": [

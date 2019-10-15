@@ -45,7 +45,7 @@ sap.ui.define([
 			var jobId = oEvent.getParameter("arguments").jobId;
 			var buildId= oEvent.getParameter("arguments").buildid;
 			var oModel_buildstatusdetails = new sap.ui.model.json.JSONModel();
-			oModel_buildstatusdetails.loadData(this.getOwnerComponent().getModel("servers").getProperty("jobresults") + "?jobName=" + jobId);
+			oModel_buildstatusdetails.loadData(this.getOwnerComponent().getModel("servers").getProperty("JobStageResults") + "?jobName=" + jobId+"&buildNumber="+buildId)  ;
 			this.getView().setModel(oModel_buildstatusdetails, "Jobstatusdetails");
 			this.byId("idBuildStages").setTitle("Stagewise Build Results--" + jobId+"--Build#"+buildId);
 			this.byId("idbtn_respectivebuild").setText("Goto "+jobId+" Build Results");

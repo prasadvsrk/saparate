@@ -16,6 +16,14 @@ sap.ui.define([], function () {
 			if (status === 'SUCCESS')
 				result = "Success";
 			return result;
+		},
+		buildStagesStatus: function (status) {
+			var result = "";
+			if (status === 'FAILED')
+				result = "Error";
+			if (status === 'SUCCESS')
+				result = "Success";
+			return result;
 		}
 	};
 });

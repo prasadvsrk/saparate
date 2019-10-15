@@ -127,17 +127,30 @@ sap.ui.define([
 			this._handleMessageBoxOpen("Are you sure you want to create a NewPipe Line?", "confirm");
 		},
 		handleCreateNewPipeLineCancel: function () {
-			this._handleMessageBoxOpen("Are you sure you want to cancel your New PipeLineCreation?", "warning");
+			this._handleMessageBoxOpenforcancel("Are you sure you want to cancel your New PipeLineCreation?", "warning");
 		},
 
 		additionalInfoValidation: function () {
 			var jobName = this.byId("ip_JobName").getValue();
 			if (jobName.length > 5)
 				this._wizard.validateStep(this.byId("Authstep"));
-				
-				else
-					this._wizard.invalidateStep(this.byId("Authstep"));
-				
+
+			else
+				this._wizard.invalidateStep(this.byId("Authstep"));
+
+		},
+		_handleMessageBoxOpenforcancel: function (sMessage, sMessageBoxType) {
+			var that = this;
+			MessageBox[sMessageBoxType](sMessage, {
+				actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+				onClose: function (oAction) {
+					if (oAction === MessageBox.Action.YES) {
+						that._oRouter.navTo("jobs", {
+							from: "tonewpipeline"
+						});
+					}
+				}
+			});
 		},
 		_handleMessageBoxOpen: function (sMessage, sMessageBoxType) {
 			MessageBox[sMessageBoxType](sMessage, {

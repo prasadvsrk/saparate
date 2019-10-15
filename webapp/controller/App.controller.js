@@ -1,7 +1,7 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"scp/com/saparate/utils/formatter"
-], function (Controller,formatter) {
+], function (Controller, formatter) {
 	"use strict";
 	return Controller.extend("scp.com.saparate.controller.App", {
 		formatter: formatter,
@@ -45,7 +45,9 @@ sap.ui.define([
 		},
 		gotoDashboard: function () {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("Dashboard");
+			oRouter.navTo("jobs", {
+				from: "recentpipeline"
+			});
 		},
 		gotoUserStory: function () {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -57,15 +59,15 @@ sap.ui.define([
 		},
 		gotoPipelines: function () {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("jobs");
-
+			oRouter.navTo("jobs", {
+				from: "tonewpipeline"
+			});
 		},
-		gotoSettings:function () {
-		//	var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-		//	oRouter.navTo("jobs");
+		gotoSettings: function () {
+			//	var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			//	oRouter.navTo("jobs");
 
 		}
 
-		
 	});
 });
